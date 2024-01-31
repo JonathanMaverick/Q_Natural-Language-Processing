@@ -30,3 +30,25 @@ import string
 # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
 removed_punctuation_list = [word for word in removed_stopword_list if word not in string.punctuation]
 print(removed_punctuation_list)
+
+# Stemming
+# Menghilangkan imbuhan kata
+
+from nltk.stem import PorterStemmer, LancasterStemmer, SnowballStemmer
+
+porter_stemmer = PorterStemmer()
+# Algoritmnya lambat, akurasi bagus (dalam bahasa inggris)
+snowball_stemmer = SnowballStemmer('english')
+# PorterStemmer V2 (dalam beberapa bahasa)
+lancaster_stemmer = LancasterStemmer()
+# Algoritmanya cepat, akurasi kurang bagus
+
+words = ['program', 'programs', 'programer', 'programing', 'programers']
+for word in words:
+    print(f"{word}")
+    print(f"Stemmer : {porter_stemmer.stem(word)}")
+    print(f"Snowball : {snowball_stemmer.stem(word)}")
+    print(f"Lancaster : {lancaster_stemmer.stem(word)}")
+    print("=====================================")
+
+ 
