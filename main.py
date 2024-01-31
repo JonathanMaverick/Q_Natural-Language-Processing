@@ -2,6 +2,7 @@
 # Membagi text kedalam sebuah token (word, symbol)
 from nltk.tokenize import word_tokenize, sent_tokenize
 import nltk
+# nltk.download('')
 
 sentence = "Hello, can you play at 07 PM? I'm busy at 08 PM. How about 09 PM?"
 
@@ -62,7 +63,16 @@ adverb = wnl.lemmatize(word, pos='r')
 noun = wnl.lemmatize(word, pos='n')
 verb = wnl.lemmatize(word, pos='v')
 
-print(adjective, adverb, noun, verb)
+# print(adjective, adverb, noun, verb)
+
+# Part of Speech Tagging (POS Tagging)
+# Membagi kata kedalam kategori
+from nltk.tag import pos_tag
+# NNP = Proper Noun, NN = Noun, VB = Verb, RB = Adverb, JJ = Adjective
+# CD = Cardinal Digit, IN = Preposition, MD = Modal, DT = Determiner
+# pythonprogramming.net/part-of-speech-tagging-nltk-tutorial/
+tagged = pos_tag(removed_punctuation_list)
+print(tagged)
 
 
  
