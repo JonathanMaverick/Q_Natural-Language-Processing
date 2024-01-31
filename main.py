@@ -2,7 +2,7 @@
 # Membagi text kedalam sebuah token (word, symbol)
 from nltk.tokenize import word_tokenize, sent_tokenize
 import nltk
-# nltk.download('')
+nltk.download('words')
 
 sentence = "Hello, can you play at 07 PM? I'm busy at 08 PM. How about 09 PM?"
 
@@ -72,7 +72,18 @@ from nltk.tag import pos_tag
 # CD = Cardinal Digit, IN = Preposition, MD = Modal, DT = Determiner
 # pythonprogramming.net/part-of-speech-tagging-nltk-tutorial/
 tagged = pos_tag(removed_punctuation_list)
-print(tagged)
+# print(tagged)
 
+# Named Entity Recognition (NER)
+from nltk.chunk import ne_chunk
 
- 
+ner = ne_chunk(tagged)
+# ner.draw()
+
+# Frequency Distribution
+# Menghitung seberapa sering suatu kata pada dalam kalimat
+from nltk.probability import FreqDist
+sentence = "I order a bowl of chicken rice and a bowl of ramen, but I hate the chicken rice."
+fd = FreqDist(word_tokenize(sentence))
+for word, count in fd.most_common(3):
+    print(f"{word} : {count}")
