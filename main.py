@@ -2,7 +2,6 @@
 # Membagi text kedalam sebuah token (word, symbol)
 from nltk.tokenize import word_tokenize, sent_tokenize
 import nltk
-nltk.download('')
 
 sentence = "Hello, can you play at 07 PM? I'm busy at 08 PM. How about 09 PM?"
 
@@ -29,7 +28,7 @@ removed_stopword_list = [word for word in list_word if word.lower() not in eng_s
 import string
 # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
 removed_punctuation_list = [word for word in removed_stopword_list if word not in string.punctuation]
-print(removed_punctuation_list)
+# print(removed_punctuation_list)
 
 # Stemming
 # Menghilangkan imbuhan kata
@@ -44,11 +43,26 @@ lancaster_stemmer = LancasterStemmer()
 # Algoritmanya cepat, akurasi kurang bagus
 
 words = ['program', 'programs', 'programer', 'programing', 'programers']
-for word in words:
-    print(f"{word}")
-    print(f"Stemmer : {porter_stemmer.stem(word)}")
-    print(f"Snowball : {snowball_stemmer.stem(word)}")
-    print(f"Lancaster : {lancaster_stemmer.stem(word)}")
-    print("=====================================")
+# for word in words:
+#     print(f"{word}")
+#     print(f"Stemmer : {porter_stemmer.stem(word)}")
+#     print(f"Snowball : {snowball_stemmer.stem(word)}")
+#     print(f"Lancaster : {lancaster_stemmer.stem(word)}")
+#     print("=====================================")
+    
+# Lemmatizing
+# Bisa menentukan konteks dari kata tersebut dan mengubah susuai konteks
+from nltk.stem import WordNetLemmatizer
+wnl = WordNetLemmatizer()
+word = "crying"
+
+# a = adjective, r = adverb, n = noun, v = verb
+adjective = wnl.lemmatize(word, pos='a') 
+adverb = wnl.lemmatize(word, pos='r')
+noun = wnl.lemmatize(word, pos='n')
+verb = wnl.lemmatize(word, pos='v')
+
+print(adjective, adverb, noun, verb)
+
 
  
