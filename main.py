@@ -2,7 +2,7 @@
 # Membagi text kedalam sebuah token (word, symbol)
 from nltk.tokenize import word_tokenize, sent_tokenize
 import nltk
-nltk.download('words')
+# nltk.download('wordnet')
 
 sentence = "Hello, can you play at 07 PM? I'm busy at 08 PM. How about 09 PM?"
 
@@ -85,5 +85,33 @@ ner = ne_chunk(tagged)
 from nltk.probability import FreqDist
 sentence = "I order a bowl of chicken rice and a bowl of ramen, but I hate the chicken rice."
 fd = FreqDist(word_tokenize(sentence))
-for word, count in fd.most_common(3):
-    print(f"{word} : {count}")
+# for word, count in fd.most_common(3):
+#     print(f"{word} : {count}")
+    
+    
+# Corpora -> Collection dari text atau audio data yang dibuat oleh native speaker dari bahasa tersebut
+
+from nltk.corpus import gutenberg
+# print(sent_tokenize(gutenberg.raw('austen-emma.txt')))
+
+# Load corpora from web
+from urllib import request
+url = "https://www.gutenberg.org/files/63919/63919.txt"
+corpus = request.urlopen(url).read().decode('utf-8')
+
+# Wordnet
+from nltk.corpus import wordnet
+word = "good"
+synsets = wordnet.synsets(word)
+# Lemmas = kata dasar
+# Synset = kumpulan dari lemmas
+# n = noun, v = verb, a = adjective, r = adverb, s = adjective satellite
+
+for synset in synsets:
+    print(f"{synset} : {synset.definition()}")
+    for lemma in synset.lemmas():
+        print(f"Synonim - {lemma.name()}")
+        for antonym in lemma.antonyms():
+            print(f"Antonym - {antonym.name()}")
+            
+            
