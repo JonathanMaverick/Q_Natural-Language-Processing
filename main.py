@@ -107,11 +107,73 @@ synsets = wordnet.synsets(word)
 # Synset = kumpulan dari lemmas
 # n = noun, v = verb, a = adjective, r = adverb, s = adjective satellite
 
-for synset in synsets:
-    print(f"{synset} : {synset.definition()}")
-    for lemma in synset.lemmas():
-        print(f"Synonim - {lemma.name()}")
-        for antonym in lemma.antonyms():
-            print(f"Antonym - {antonym.name()}")
+# for synset in synsets:
+#     print(f"{synset} : {synset.definition()}")
+#     for lemma in synset.lemmas():
+#         print(f"Synonim - {lemma.name()}")
+#         for antonym in lemma.antonyms():
+#             print(f"Antonym - {antonym.name()}")
             
-            
+# Naive Bayes
+# Supervised Learning -> Metode dalam machine learning yang menggunakan data yang sudah dilabeli (Classification, Regression)
+# Unsupervised Learning -> Metode dalam machine learning yang menggunakan data yang belum dilabeli (Clustering, Association, Dimensionality Reduction)
+
+# Naive Bayes 
+with open("positive.txt", "r", encoding="latin-1") as positive_file:
+    positive = positive_file.read()
+
+with open("negative.txt", "r", encoding="latin-1") as negative_file:
+    negative = negative_file.read()
+
+list_words = word_tokenize(positive) + word_tokenize(negative)
+list_words = [word for word in list_words if word.lower() not in eng_stopwords]
+list_words = [word for word in list_words if word not in string.punctuation]
+list_words = [word for word in list_words if word.isalpha()]
+
+fd = FreqDist(list_words)
+list_words = [word for word, count in fd.most_common(100)]
+# print(list_words)
+
+# Labelling sentence
+labeled_sentence = []
+for sentence in positive.split("\n"):
+    labeled_sentence.append((sentence, "pos"))
+for sentence in negative.split("\n"):
+    labeled_sentence.append((sentence, "neg"))
+    
+dataset = []
+for sent, label in labeled_sentence:
+    dict = {"key":"value"}
+    word = word_tokenize(sent)
+    for feature in list_words:
+        key = feature
+        value = feature in words
+        dict[key] = value
+    dataset.append((dict, label))
+    
+import random
+random.shuffle(dataset)
+counter = int(len(dataset) * 0.7)
+training_data = dataset[:counter]
+testing_data = dataset[counter:]
+
+from nltk.classify import NaiveBayesClassifier,accuracy
+# classifier = NaiveBayesClassifier.train(training_data)
+# accuracy = accuracy(classifier, testing_data)
+# print(accuracy)
+
+import pickle
+# file = open("model.pickle", "wb")
+# pickle.dump(classifier, file)
+# file.close()
+
+file = open("model.pickle", "rb")
+classifier = pickle.load(file)
+file.close()
+# accuracy = accuracy(classifier, testing_data)
+# print(accuracy)
+
+review = input("Input Review : ")
+words = word_tokenize(review)
+result = classifier.classify(FreqDist(words))
+print(result)
