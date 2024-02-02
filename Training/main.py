@@ -167,11 +167,6 @@ import pickle
 # pickle.dump(classifier, file)
 # file.close()
 
-file = open("model.pickle", "rb")
-classifier = pickle.load(file)
-file.close()
-# accuracy = accuracy(classifier, testing_data)
-# print(accuracy)
 
 review = input("Input Review : ")
 words = word_tokenize(review)
