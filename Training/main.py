@@ -132,7 +132,7 @@ list_words = [word for word in list_words if word.isalpha()]
 
 fd = FreqDist(list_words)
 list_words = [word for word, count in fd.most_common(100)]
-# print(list_words)
+print(list_words)
 
 # Labelling sentence
 labeled_sentence = []
@@ -151,6 +151,9 @@ for sent, label in labeled_sentence:
         dict[key] = value
     dataset.append((dict, label))
     
+# for data in dataset:
+#     print(data)
+    
 import random
 random.shuffle(dataset)
 counter = int(len(dataset) * 0.7)
@@ -158,14 +161,14 @@ training_data = dataset[:counter]
 testing_data = dataset[counter:]
 
 from nltk.classify import NaiveBayesClassifier,accuracy
-# classifier = NaiveBayesClassifier.train(training_data)
-# accuracy = accuracy(classifier, testing_data)
-# print(accuracy)
+classifier = NaiveBayesClassifier.train(training_data)
+accuracy = accuracy(classifier, testing_data)
+print(accuracy)
 
 import pickle
-# file = open("model.pickle", "wb")
-# pickle.dump(classifier, file)
-# file.close()
+file = open("model.pickle", "wb")
+pickle.dump(classifier, file)
+file.close()
 
 
 review = input("Input Review : ")
